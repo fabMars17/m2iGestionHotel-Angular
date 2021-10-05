@@ -1,0 +1,50 @@
+<div style="width: 90%;margin-left: auto;margin-right: auto">
+    <!--<textarea>{{ client | json }}</textarea>
+    <div class="alert alert-success" *ngIf="succes">Patient Correctement Ajouter</div>-->
+    
+    <h1>Liste des patients</h1>
+    <!--<button class="btn btn-primary" (click)="add()" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>-->
+
+    <br><br>
+    <!--<div class="row">
+        <div class="col-9">
+            <div class="input-group mb-3 clearfix">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Rechercher un patient" aria-describedby="basic-addon1" [(ngModel)]="search">
+            </div>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="updatePatients()">Rechercher</button>
+        </div>
+    </div>-->
+
+    <table class="table table-striped table-hover">
+        <thead style="background-color: #c7621e; color: whitesmoke">
+            <tr>
+                <th scope="col" style="width: 45px">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Telephone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Adresse</th>
+                <th scope="col" style="width: 220px">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let client of clients">
+                <td class="align-middle" style="width: 60px" text="">{{client.id}}</td>
+                <td class="align-middle" text="">{{client.nom}}</td>
+                <td class="align-middle" text="">{{client.telephone}}</td>
+                <td class="align-middle" text="">{{client.email}}</td>
+                <td class="align-middle" text="">{{client.adresse}}</td>
+                <td>
+                    <div aria-label="Toolbar with button groups" class="btn-toolbar" role="toolbar">
+                        <button id="rdv" class="btn btn-outline-success" data-bs-target="#exampleModalRdv" data-bs-toggle="modal" type="submit">Nouveau Rdv</button>
+                        <button id="edit" class="btn btn-outline-primary" type="submit" data-bs-target="#exampleModal" data-bs-toggle="modal" >Modifier</button>
+                        <button class="btn btn-outline-danger" >Supprimer</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
