@@ -1,7 +1,8 @@
 <div style="width: 90%;margin-left: auto;margin-right: auto">
     <h1>Liste des Reservations</h1>
-    <!--<button (click)="add()" class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>-->
-
+    <button (click)="add()" class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>
+    <br><br>
+    
     <table class="table table-striped table-hover">
         <thead style="background-color: #c7621e; color: whitesmoke">
             <tr>
@@ -19,18 +20,90 @@
                 <td class="align-middle" style="width: 60px" text="">{{resa.id}}</td>
                 <td class="align-middle" text="">{{resa.client?.nom}}</td>
                 <td class="align-middle" text="">{{resa.hotel?.nom}}</td>
-                <td class="align-middle" text="">{{resa.dateStart | date: 'HH:mm EEEE dd MMMM YYYY'}}</td><!--| date:'medium' | date:'shortTime | date: 'dd/MM/yyyy a HH:mm'' -->
-                <td class="align-middle" text="">{{resa.dateEnd | date: 'HH:mm EEEE dd MMMM YYYY' }}</td>
+                <td class="align-middle" text="">12:00 {{resa.dateStart | date: 'EEEE dd MMMM YYYY'}}</td><!--| date:'medium' | date:'shortTime | date: 'dd/MM/yyyy a HH:mm'' -->
+                <td class="align-middle" text="">12:00 {{resa.dateEnd | date: 'EEEE dd MMMM YYYY' }}</td>
                 <td class="align-middle" text="">{{resa.chambre}}</td>
                 
-                <!--<td>
+                <td>
                     <div aria-label="Toolbar with button groups" class="btn-toolbar" role="toolbar">
-                        <button (click)="edit(rdv.id)" id="edit" class="btn btn-outline-primary" type="submit" 
+                        <button (click)="edit(resa.id)" id="edit" class="btn btn-outline-primary" type="submit" 
                             data-bs-target="#exampleModal" data-bs-toggle="modal">Modifier</button>
-                        <button (click)="delete(rdv.id)" class="btn btn-outline-danger" >Supprimer</button>
+                        <button (click)="delete(resa.id)" class="btn btn-outline-danger" >Supprimer</button>
                     </div>
-                </td>-->
+                </td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<!-- Modal Bootstrap  For new Rendez-vous -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div  class="modal-dialog" role="document">
+        <form name="rdvForm" (submit)="submitForm()">
+            <div class="modal-content">
+                {{ n | json}}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf=" n.id == undefined">Ajouter une Reservation</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf=" n.id != undefined">Editer une Reservation</h5>
+                    <button #closeaction type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="rdvFields">
+                        <div class="mb-3">
+                            <label for="client" class="form-label">Client</label>
+                            <!--<h5 *ngIf="n.id" class="modal-title" id="exampleModalLabel" text=""><small>"{{n.client?.nom}}"</small></h5>-->
+                            <select  name="client" id="client" [(ngModel)]="n.client" required class="form-select" [compareWith]="checkHotel">
+                                <option [ngValue]="null" selected disabled>Veuillez sélectionner</option>
+                                <option *ngFor="let client of clients" [ngValue]="client" [text]="client.nom"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hotel" class="form-label">Hotel</label>
+                            
+                            <!--<select *ngIf="!n.id" name="patient" id="patient" [(ngModel)]="n.id" required class="form-select">
+                                <option *ngFor="let resa of resas" [ngValue]="resa.id" [text]="resa.hotel?.nom">{{resa.id}}</option>
+                            </select>-->
+                            <select #optionselected class='form-control' name="hotel" [(ngModel)]="n.hotel" [compareWith]="checkHotel" required>
+                                <option [ngValue]="null" selected disabled>Veuillez sélectionner</option>
+                                <option *ngFor="let hotel of hotels" [ngValue]="hotel" [text]="hotel.nom"></option>
+                                 <!--<option *ngFor="let ville of villes" [ngValue]="ville"
+                                    [attr.selected]="newp.ville?.id==ville.id ? '' : null">{{ville.nom}}</option>-->
+                            </select>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="cp" class="form-label">Date</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="dateStart" class="form-label">Debut :</label>
+                                    <input type="date" name="dateStart" class="form-control" required
+                                    [ngModel] ="n.dateStart | date:'yyyy-MM-dd'" (ngModelChange)="n.dateStart = $event">
+                                </div>
+                                <div class="col-6">
+                                    <label for="etoiles" class="form-label">Fin :</label>
+                                    <input type="date" name="dateEnd" class="form-control" required
+                                        value="" [ngModel] ="n.dateEnd | date:'yyyy-MM-dd'" (ngModelChange)="n.dateEnd = $event">
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="chambre" class="form-label">Chambre</label>
+                            <input type="text" class="form-control" id="chambre" name="chambre" placeholder="1"
+                                [(ngModel)]="n.chambre" minlength="2" required>
+                        </div>
+            
+                        
+                    </div>
+                </div>
+            
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-secondary">Valider</button>
+                    <button type="reset" class="btn btn-danger">Annuler</button>
+                </div>
+        </div>
+        </form>
+    </div>
 </div>

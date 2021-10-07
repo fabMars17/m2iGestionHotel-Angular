@@ -2,8 +2,8 @@
     <!--<textarea>{{ client | json }}</textarea>
     <div class="alert alert-success" *ngIf="succes">Patient Correctement Ajouter</div>-->
     
-    <h1>Liste des patients</h1>
-    <!--<button class="btn btn-primary" (click)="add()" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>-->
+    <h1>Liste des clients</h1>
+    <button class="btn btn-primary" (click)="add()" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>
 
     <br><br>
     <!--<div class="row">
@@ -39,12 +39,57 @@
                 <td>
                     <div aria-label="Toolbar with button groups" class="btn-toolbar" role="toolbar">
                         <button id="rdv" class="btn btn-outline-success" data-bs-target="#exampleModalRdv" data-bs-toggle="modal" type="submit">Nouveau Rdv</button>
-                        <button id="edit" class="btn btn-outline-primary" type="submit" data-bs-target="#exampleModal" data-bs-toggle="modal" >Modifier</button>
-                        <button class="btn btn-outline-danger" >Supprimer</button>
+                        <button id="edit" (click)="edit(client.id)" class="btn btn-outline-primary" type="submit" data-bs-target="#exampleModal" data-bs-toggle="modal" >Modifier</button>
+                        <button (click)="delete(client.id)" class="btn btn-outline-danger" >Supprimer</button>
                     </div>
                 </td>
             </tr>
         </tbody>
 
     </table>
+</div>
+
+<!-- Modal Bootstrap -->
+<div class="modal fade" #modal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div  class="modal-dialog" role="document">
+        <form  name="patientForm" (submit)="submitForm()">
+            <div class="modal-content">
+                {{ n | json}}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf=" n.id == undefined">Ajouter un Client</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf=" n.id != undefined">Editer un Client</h5>
+                    <button type="button" #closeaction class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!--<div class="alert alert-warning" *ngIf="error">Un probleme de saisie a ete detecter</div>-->
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="Martin"
+                            [(ngModel)]="n.nom" minlength="2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email : </label>
+                        <input type="text" class="form-control" id="cp" name="email" placeholder="Jacque"
+                            [(ngModel)]="n.email" minlength="2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telephone" class="form-label">Téléphone : </label>
+                        <input class="form-control" name="telephone" placeholder="01 02 03 04 05" type="tel"
+                            [(ngModel)]="n.telephone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="adresse" class="form-label">Adresse : </label>
+                        <input class="form-control" name="adresse" type="text" id="adresse" [(ngModel)]="n.adresse">
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary">Valider</button>
+                    <button type="reset" class="btn btn-danger float-end" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
