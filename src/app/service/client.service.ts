@@ -12,7 +12,7 @@ export class ClientService {
 
   constructor( private http: HttpClient) { }
 
-  loadPatient() : Observable<Client[]> {
+  loadClient() : Observable<Client[]> {
     return this.http.get<Client[]>(environment.apiUrl + "client", httpOptions);
   }
     /*loadPatient( search: String ): Observable<Client[]> {
@@ -26,19 +26,19 @@ export class ClientService {
     }*/
   
 
-  addPatient( c : Client ) : Observable<Client> {
+  addClient( c : Client ) : Observable<Client> {
     return this.http.post<Client>( environment.apiUrl + "client" , c , httpOptions )
   }
 
-  editPatient( c : Client ) : Observable<Client> {
+  editClient( c : Client ) : Observable<Client> {
     return this.http.put<Client>( environment.apiUrl + "client/"+c.id , c , httpOptions )
   }
 
-  getPatient(id? : number ) : Observable<Client> {
+  getClient(id? : number ) : Observable<Client> {
     return this.http.get<Client>(environment.apiUrl + "client/"+id, httpOptions);
   }
 
-  deletePatient(id? : number ) : Observable<Client> {
+  deleteClient(id? : number ) : Observable<Client> {
     return this.http.delete<Client>(environment.apiUrl + "client/"+id, httpOptions);
   }
 }

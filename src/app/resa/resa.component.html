@@ -1,1 +1,36 @@
-<p>resa works!</p>
+<div style="width: 90%;margin-left: auto;margin-right: auto">
+    <h1>Liste des Reservations</h1>
+    <!--<button (click)="add()" class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>-->
+
+    <table class="table table-striped table-hover">
+        <thead style="background-color: #c7621e; color: whitesmoke">
+            <tr>
+                <th scope="col" style="width: 45px">#</th>
+                <th scope="col">client</th>
+                <th scope="col">hotel</th>
+                <th scope="col">date debut</th>
+                <th scope="col">date fin</th>
+                <th scope="col">chambre No</th>
+                <th scope="col" style="width: 220px">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let resa of resas">
+                <td class="align-middle" style="width: 60px" text="">{{resa.id}}</td>
+                <td class="align-middle" text="">{{resa.client?.nom}}</td>
+                <td class="align-middle" text="">{{resa.hotel?.nom}}</td>
+                <td class="align-middle" text="">{{resa.dateStart | date: 'HH:mm EEEE dd MMMM YYYY'}}</td><!--| date:'medium' | date:'shortTime | date: 'dd/MM/yyyy a HH:mm'' -->
+                <td class="align-middle" text="">{{resa.dateEnd | date: 'HH:mm EEEE dd MMMM YYYY' }}</td>
+                <td class="align-middle" text="">{{resa.chambre}}</td>
+                
+                <!--<td>
+                    <div aria-label="Toolbar with button groups" class="btn-toolbar" role="toolbar">
+                        <button (click)="edit(rdv.id)" id="edit" class="btn btn-outline-primary" type="submit" 
+                            data-bs-target="#exampleModal" data-bs-toggle="modal">Modifier</button>
+                        <button (click)="delete(rdv.id)" class="btn btn-outline-danger" >Supprimer</button>
+                    </div>
+                </td>-->
+            </tr>
+        </tbody>
+    </table>
+</div>

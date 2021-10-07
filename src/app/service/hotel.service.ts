@@ -26,19 +26,19 @@ export class HotelService {
     }*/
   
 
-  addPatient( c : Hotel ) : Observable<Hotel> {
+  addHotel( c : Hotel ) : Observable<Hotel> {
     return this.http.post<Hotel>( environment.apiUrl + "hotel" , c , httpOptions )
   }
 
-  editPatient( c : Hotel ) : Observable<Hotel> {
+  editHotel( c : Hotel ) : Observable<Hotel> {
     return this.http.put<Hotel>( environment.apiUrl + "hotel/"+c.id , c , httpOptions )
   }
 
-  getPatient(id? : number ) : Observable<Hotel> {
+  getHotel(id? : number ) : Observable<Hotel> {
     return this.http.get<Hotel>(environment.apiUrl + "hotel/"+id, httpOptions);
   }
 
-  deletePatient(id? : number ) : Observable<Hotel> {
+  deleteHotel(id? : number ) : Observable<Hotel> {
     return this.http.delete<Hotel>(environment.apiUrl + "hotel/"+id, httpOptions);
   }
 }

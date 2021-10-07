@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Resa } from '../classes/resa';
+import { ResaService } from '../service/resa.service';
 
 @Component({
   selector: 'app-resa',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResaComponent implements OnInit {
 
-  constructor() { }
+  resas: Array<Resa> = [];
+
+  constructor(private rs : ResaService) { }
 
   ngOnInit(): void {
+    this.rs.loadResa().subscribe(
+      data => {
+        this.resas = data;
+        console.log(data);
+      }
+    )
   }
 
 }

@@ -9,12 +9,12 @@ import { ClientService } from '../service/client.service';
 })
 export class ClientComponent implements OnInit {
 
-  clients: Array<Client> = [];
+  clients: Client[]=[]
 
   constructor(private cs : ClientService) { }
 
   ngOnInit(): void {
-    this.cs.loadPatient().subscribe(
+    this.cs.loadClient().subscribe(
       data => {
         this.clients = data;
         console.log(data);
