@@ -2,7 +2,19 @@
     <h1>Liste des Reservations</h1>
     <button (click)="add()" class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>
     <br><br>
-    
+
+    <div class="row">
+        <div class="col-9">
+            <div class="input-group mb-3 clearfix">
+                <span class="fas input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <input (ngModelChange)="ClientFilter($event)" type="text" class="form-control" placeholder="Rechercher un client (au moins 2 lettres)" aria-describedby="basic-addon1" [(ngModel)]="search">
+            </div>
+        </div>
+        <!--<div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="update()">Rechercher</button>
+        </div>-->
+    </div>
+
     <table class="table table-striped table-hover">
         <thead style="background-color: #c7621e; color: whitesmoke">
             <tr>
@@ -75,11 +87,13 @@
             
                         <div class="mb-3">
                             <label for="cp" class="form-label">Date</label>
+                            <!--<div class="alert alert-warning" *ngIf="dateparadox">La date de debut ne peut pas apres ou le meme jour que la date de fin</div>-->
+                            <div class="alert alert-danger" *ngIf="dateparadox">La date de debut ne peut pas apres ou le meme jour que la date de fin</div>
                             <div class="row">
                                 <div class="col-6">
                                     <label for="dateStart" class="form-label">Debut :</label>
                                     <input type="date" name="dateStart" class="form-control" required
-                                    [ngModel] ="n.dateStart | date:'yyyy-MM-dd'" (ngModelChange)="n.dateStart = $event">
+                                        value="" [ngModel] ="n.dateStart | date:'yyyy-MM-dd'" (ngModelChange)="n.dateStart = $event">
                                 </div>
                                 <div class="col-6">
                                     <label for="etoiles" class="form-label">Fin :</label>

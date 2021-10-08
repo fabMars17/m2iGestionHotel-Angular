@@ -15,6 +15,15 @@ export class ResaService {
   loadResa() : Observable<Resa[]> {
     return this.http.get<Resa[]>(environment.apiUrl + "resa", httpOptions);
   }
+
+  searchFilter( search: String ): Observable<Resa[]> {
+    console.log("Filtrage par Nom de client");
+    let searchCondition = ""
+    
+    searchCondition = "?search="+search; 
+    
+    return this.http.get<Resa[]>( environment.apiUrl  + "resa"+searchCondition , httpOptions );
+  }
     /*loadPatient( search: String ): Observable<Client[]> {
       console.log("chargement des villes");
       let searchCondition = ""
