@@ -26,6 +26,9 @@ export class ResaComponent implements OnInit {
   hotels: Array<Hotel> = [];
   clients: Array<Client> = [];
 
+  fclient:boolean=false
+  fhotel:boolean=false
+
   n: Resa = new Resa()
   ds: Date = new Date()
   de: Date = new Date()
@@ -87,6 +90,13 @@ export class ResaComponent implements OnInit {
   }
 
   submitForm(){
+    if(this.n.client == undefined){
+      this.fclient = true
+    }
+    else if(this.n.hotel == undefined){
+      this.fhotel = true
+    }
+else {
     if(this.n.id==undefined){
       this.rs.addResa(this.n).subscribe(
       data => {
@@ -141,6 +151,7 @@ export class ResaComponent implements OnInit {
           //this.error = true;
         })
     }
+}
   }
 
   delete ( id? : number){

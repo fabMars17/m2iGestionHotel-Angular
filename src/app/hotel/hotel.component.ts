@@ -14,7 +14,7 @@ export class HotelComponent implements OnInit {
   hotels: Array<Hotel>=[];
  
   n: Hotel = new Hotel()
-
+  
   constructor(private hs : HotelService) { }
 
   ngOnInit(): void {
@@ -54,22 +54,11 @@ export class HotelComponent implements OnInit {
   }
 
   submitForm(){
-    if(this.n.id==undefined){
-      this.hs.addHotel(this.n).subscribe(
-      data => {
-        console.log(data);
-        this.closeformelm.nativeElement.click();
-        this.update();
-        //this.succes = true;
-      } ,
-      error => {
-        console.log(error);
-        //this.error = true;
-      })
-    }
-    else {
-      this.hs.editHotel(this.n).subscribe(
+    
+      if(this.n.id==undefined){
+        this.hs.addHotel(this.n).subscribe(
         data => {
+          console.log(data);
           this.closeformelm.nativeElement.click();
           this.update();
           //this.succes = true;
@@ -78,7 +67,20 @@ export class HotelComponent implements OnInit {
           console.log(error);
           //this.error = true;
         })
-    }
+      }
+      else {
+        this.hs.editHotel(this.n).subscribe(
+          data => {
+            this.closeformelm.nativeElement.click();
+            this.update();
+            //this.succes = true;
+          } ,
+          error => {
+            console.log(error);
+            //this.error = true;
+          })
+      }
+    
   }
 
   delete ( id? : number){

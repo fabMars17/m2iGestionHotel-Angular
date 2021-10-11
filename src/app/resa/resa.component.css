@@ -1,3 +1,4 @@
+/* icone from https://fontawesome.com/*/
 .fas::before {
     content: url(../../assets/img/search-solid.svg);
     width : 24px;

@@ -10,6 +10,7 @@ import { ClientComponent } from './client/client.component';
 import { HeaderComponent } from './header/header.component';
 import { HotelComponent } from './hotel/hotel.component';
 import { ResaComponent } from './resa/resa.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ResaComponent } from './resa/resa.component';
     ClientComponent,
     HeaderComponent,
     HotelComponent,
-    ResaComponent
+    ResaComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

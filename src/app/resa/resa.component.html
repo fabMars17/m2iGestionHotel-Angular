@@ -63,6 +63,7 @@
                 <div class="modal-body">
                     <div id="rdvFields">
                         <div class="mb-3">
+                            <div class="alert alert-danger" *ngIf="fclient">Selectionner un Client</div>
                             <label for="client" class="form-label">Client</label>
                             <!--<h5 *ngIf="n.id" class="modal-title" id="exampleModalLabel" text=""><small>"{{n.client?.nom}}"</small></h5>-->
                             <select  name="client" id="client" [(ngModel)]="n.client" required class="form-select" [compareWith]="checkHotel">
@@ -72,6 +73,7 @@
                         </div>
 
                         <div class="mb-3">
+                            <div class="alert alert-danger" *ngIf="fhotel">Selectionner un Hotel</div>
                             <label for="hotel" class="form-label">Hotel</label>
                             
                             <!--<select *ngIf="!n.id" name="patient" id="patient" [(ngModel)]="n.id" required class="form-select">

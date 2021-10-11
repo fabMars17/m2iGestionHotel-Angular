@@ -1,0 +1,17 @@
+<div id="form-center">
+    <h3>Veuillez vous authentifier</h3>
+    <form name="monForm" action="" method="post" (submit)="authentification()">
+        <div class="text-danger" *ngIf="error">Nom d'utilisateur ou mot de passe incorrect<br><br></div>
+        <div class="form-line">
+            <!--<label>Email *</label>-->
+            <input type="text" name="userName" placeholder="Votre username" required [(ngModel)]="u.userName">
+        </div>
+        <div class="form-line">
+            <!--<label>Mot de passe *</label>-->
+            <input type="password" name="password" placeholder="Votre mot de passe" required [(ngModel)]="u.password">
+        </div>
+        <div class="form-line">
+            <button type="submit">Envoyer</button>
+        </div>
+    </form>
+</div>
