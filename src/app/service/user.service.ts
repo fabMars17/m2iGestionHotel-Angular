@@ -9,6 +9,7 @@ import { httpOptions } from "../app.variable";
 })
 export class UserService {
 
+  public userlogs : string = ""
     constructor(private http : HttpClient) {}
 
     auth( u: any) {

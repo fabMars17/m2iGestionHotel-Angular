@@ -28,6 +28,7 @@ export class ResaComponent implements OnInit {
 
   fclient:boolean=false
   fhotel:boolean=false
+  fchambre:boolean=false
 
   n: Resa = new Resa()
   ds: Date = new Date()
@@ -62,6 +63,9 @@ export class ResaComponent implements OnInit {
   }
 
   add(){
+    this.fclient = false
+    this.fhotel = false
+    this.fchambre=false
     this.dateparadox = false
 
     // to set date by default with 1 days gap on form
@@ -82,6 +86,10 @@ export class ResaComponent implements OnInit {
   }
 
   edit(id? : number){
+    this.fclient = false
+    this.fhotel = false
+    this.fchambre=false
+    this.dateparadox = false
     this.rs.getResa(id).subscribe(
       data =>{
         this.n = data
@@ -93,65 +101,62 @@ export class ResaComponent implements OnInit {
     if(this.n.client == undefined){
       this.fclient = true
     }
-    else if(this.n.hotel == undefined){
+    if(this.n.hotel == undefined){
       this.fhotel = true
     }
-else {
-    if(this.n.id==undefined){
-      this.rs.addResa(this.n).subscribe(
-      data => {
-        console.log(data);
-        this.closeformelm.nativeElement.click();
-        this.update();
-        //this.succes = true;
-      } ,
-      error => {
-        console.log("aaa", error)
-        console.log("ooo", error.error.message)
-
-        this.dateparadox = true
-        //this.onError.next(error.message);
-        //return throwError(error);
-        //this.error = true;
-      })
+    if(this.n.chambre == undefined || this.n.chambre==0){
+      this.fchambre=true
     }
     else {
-      let latest_date =this.datepipe.transform(this.n.dateStart, 'yyyy-MM-dd');
-      //this.n.dateStart = this.n.dateStart?.toISOString().split('T')[0]
-      console.log(latest_date);
-      //this.n.dateStart =latest_date
-      //console.log(this.datePipe.transform(this.n.dateStart, 'yyyy-MM-dd'))
-      this.rs.editResa(this.n).subscribe(
-        data => {
-          this.closeformelm.nativeElement.click();
-          //this.update();
-          if(this.search.length>1) {
-            this.rs.searchFilter(this.search).subscribe (
-              data => {
-                this.resas = data;
-                console.log(data);
-              })
-            this.hs.loadHotel().subscribe (
-              data => {
-                console.log(data);
-                this.hotels = data;
-              })
-            this.cs.loadClient().subscribe (
-              data => {
-                console.log(data);
-                this.clients = data;
-              })
-          }else {
+        if(this.n.id==undefined){
+          this.rs.addResa(this.n).subscribe(
+          data => {
+            console.log(data);
+            this.closeformelm.nativeElement.click();
             this.update();
-          }
-          //this.succes = true;
-        } ,
-        error => {
-          console.log(error);
-          //this.error = true;
-        })
+            //this.succes = true;
+          } ,
+          error => {
+            this.dateparadox = true
+          })
+        }
+        else {
+          let latest_date =this.datepipe.transform(this.n.dateStart, 'yyyy-MM-dd');
+          //this.n.dateStart = this.n.dateStart?.toISOString().split('T')[0]
+          console.log(latest_date);
+          //this.n.dateStart =latest_date
+          //console.log(this.datePipe.transform(this.n.dateStart, 'yyyy-MM-dd'))
+          this.rs.editResa(this.n).subscribe(
+            data => {
+              this.closeformelm.nativeElement.click();
+              //this.update();
+              if(this.search.length>1) {
+                this.rs.searchFilter(this.search).subscribe (
+                  data => {
+                    this.resas = data;
+                    console.log(data);
+                  })
+                this.hs.loadHotel().subscribe (
+                  data => {
+                    console.log(data);
+                    this.hotels = data;
+                  })
+                this.cs.loadClient().subscribe (
+                  data => {
+                    console.log(data);
+                    this.clients = data;
+                  })
+              }else {
+                this.update();
+              }
+              //this.succes = true;
+            } ,
+            error => {
+              console.log(error);
+              this.dateparadox = true
+            })
+        }
     }
-}
   }
 
   delete ( id? : number){
@@ -163,11 +168,7 @@ else {
     )}
   }
 
-  checkClient(a : Client, b: Client) : boolean {
-    return a != undefined && b != undefined && a.id == b.id;
-  }
-
-  checkHotel(a : Hotel, b: Hotel) : boolean {
+  checkSelect(a : any, b: any) : boolean {
     return a != undefined && b != undefined && a.id == b.id;
   }
 
@@ -193,5 +194,17 @@ else {
     }else {
       this.update();
     }
+  }
+
+  callType(e : any){
+    console.log(e)
+    if(this.n.client!=undefined) this.fclient=false
+    if(this.n.hotel!=undefined) this.fhotel=false
+    if(e!=undefined){
+      e=Number(e)
+      if(e>0){
+        this.fchambre=false
+      }
+    } 
   }
 }

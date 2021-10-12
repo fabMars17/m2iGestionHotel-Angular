@@ -1,4 +1,4 @@
-<div style="width: 90%;margin-left: auto;margin-right: auto">
+<div style="width: 90%;margin-left: auto;margin-right: auto;">
     <h1>Liste des Reservations</h1>
     <button (click)="add()" class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" type="submit">Ajouter</button>
     <br><br>
@@ -15,37 +15,39 @@
         </div>-->
     </div>
 
-    <table class="table table-striped table-hover">
-        <thead style="background-color: #c7621e; color: whitesmoke">
-            <tr>
-                <th scope="col" style="width: 45px">#</th>
-                <th scope="col">client</th>
-                <th scope="col">hotel</th>
-                <th scope="col">date debut</th>
-                <th scope="col">date fin</th>
-                <th scope="col">chambre No</th>
-                <th scope="col" style="width: 220px">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let resa of resas">
-                <td class="align-middle" style="width: 60px" text="">{{resa.id}}</td>
-                <td class="align-middle" text="">{{resa.client?.nom}}</td>
-                <td class="align-middle" text="">{{resa.hotel?.nom}}</td>
-                <td class="align-middle" text="">12:00 {{resa.dateStart | date: 'EEEE dd MMMM YYYY'}}</td><!--| date:'medium' | date:'shortTime | date: 'dd/MM/yyyy a HH:mm'' -->
-                <td class="align-middle" text="">12:00 {{resa.dateEnd | date: 'EEEE dd MMMM YYYY' }}</td>
-                <td class="align-middle" text="">{{resa.chambre}}</td>
-                
-                <td>
-                    <div aria-label="Toolbar with button groups" class="btn-toolbar" role="toolbar">
-                        <button (click)="edit(resa.id)" id="edit" class="btn btn-outline-primary" type="submit" 
-                            data-bs-target="#exampleModal" data-bs-toggle="modal">Modifier</button>
-                        <button (click)="delete(resa.id)" class="btn btn-outline-danger" >Supprimer</button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div style="width: 98%; height: calc(100vh - 320px); overflow: auto;">
+        <table class="table table-striped table-hover">
+            <thead style="background-color: #1c5ea1; color: whitesmoke">
+                <tr>
+                    <th scope="col" style="width: 45px">#</th>
+                    <th scope="col">client</th>
+                    <th scope="col">hotel</th>
+                    <th scope="col">date debut</th>
+                    <th scope="col">date fin</th>
+                    <th scope="col">chambre No</th>
+                    <th scope="col" style="width: 220px">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let resa of resas">
+                    <td class="align-middle" style="width: 60px" text="">{{resa.id}}</td>
+                    <td class="align-middle" text="">{{resa.client?.nom}}</td>
+                    <td class="align-middle" text="">{{resa.hotel?.nom}}</td>
+                    <td class="align-middle" text="">12:00 {{resa.dateStart | date: 'EEEE dd MMMM YYYY'}}</td><!--| date:'medium' | date:'shortTime | date: 'dd/MM/yyyy a HH:mm'' -->
+                    <td class="align-middle" text="">12:00 {{resa.dateEnd | date: 'EEEE dd MMMM YYYY' }}</td>
+                    <td class="align-middle" text="">{{resa.chambre}}</td>
+                    
+                    <td>
+                        <div aria-label="Toolbar with button groups" class="btn-toolbar" role="toolbar">
+                            <button (click)="edit(resa.id)" id="edit" class="btn btn-outline-primary" type="submit" 
+                                data-bs-target="#exampleModal" data-bs-toggle="modal">Modifier</button>
+                            <button (click)="delete(resa.id)" class="btn btn-outline-danger" >Supprimer</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal Bootstrap  For new Rendez-vous -->
@@ -66,7 +68,7 @@
                             <div class="alert alert-danger" *ngIf="fclient">Selectionner un Client</div>
                             <label for="client" class="form-label">Client</label>
                             <!--<h5 *ngIf="n.id" class="modal-title" id="exampleModalLabel" text=""><small>"{{n.client?.nom}}"</small></h5>-->
-                            <select  name="client" id="client" [(ngModel)]="n.client" required class="form-select" [compareWith]="checkHotel">
+                            <select (change)="callType($event)" name="client" id="client" [(ngModel)]="n.client" required class="form-select" [compareWith]="checkSelect">
                                 <option [ngValue]="null" selected disabled>Veuillez sélectionner</option>
                                 <option *ngFor="let client of clients" [ngValue]="client" [text]="client.nom"></option>
                             </select>
@@ -79,9 +81,9 @@
                             <!--<select *ngIf="!n.id" name="patient" id="patient" [(ngModel)]="n.id" required class="form-select">
                                 <option *ngFor="let resa of resas" [ngValue]="resa.id" [text]="resa.hotel?.nom">{{resa.id}}</option>
                             </select>-->
-                            <select #optionselected class='form-control' name="hotel" [(ngModel)]="n.hotel" [compareWith]="checkHotel" required>
+                            <select #optionselected (change)="callType($event)" class='form-select' name="hotel" [(ngModel)]="n.hotel" [compareWith]="checkSelect" required>
                                 <option [ngValue]="null" selected disabled>Veuillez sélectionner</option>
-                                <option *ngFor="let hotel of hotels" [ngValue]="hotel" [text]="hotel.nom"></option>
+                                <option *ngFor="let hotel of hotels ; let i = index" [ngValue]="hotel" [text]="hotel.nom">{{hotel.nom}}</option>
                                  <!--<option *ngFor="let ville of villes" [ngValue]="ville"
                                     [attr.selected]="newp.ville?.id==ville.id ? '' : null">{{ville.nom}}</option>-->
                             </select>
@@ -90,7 +92,7 @@
                         <div class="mb-3">
                             <label for="cp" class="form-label">Date</label>
                             <!--<div class="alert alert-warning" *ngIf="dateparadox">La date de debut ne peut pas apres ou le meme jour que la date de fin</div>-->
-                            <div class="alert alert-danger" *ngIf="dateparadox">La date de debut ne peut pas apres ou le meme jour que la date de fin</div>
+                            <div class="alert alert-danger" *ngIf="dateparadox">Probleme de date, choissisez une autre date</div>
                             <div class="row">
                                 <div class="col-6">
                                     <label for="dateStart" class="form-label">Debut :</label>
@@ -106,8 +108,9 @@
                         </div>
             
                         <div class="mb-3">
+                            <div class="alert alert-danger" *ngIf="fchambre">Indiquez un numero de chambre superieur a 0</div>
                             <label for="chambre" class="form-label">Chambre</label>
-                            <input type="text" class="form-control" id="chambre" name="chambre" placeholder="1"
+                            <input (ngModelChange)="callType($event)" type="text" class="form-control" id="chambre" name="chambre" placeholder="1"
                                 [(ngModel)]="n.chambre" minlength="2" required>
                         </div>
             

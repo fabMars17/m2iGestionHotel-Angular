@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
 import { UserService } from '../service/user.service';
 
 @Component({
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
     console.log(this.u)
     this.us.auth(this.u).subscribe(
       data =>{
+        this.us.userlogs=data.userName
         console.log(data)
         if (data.id > 0) {
           sessionStorage.setItem("connectedUser" , data ); 
